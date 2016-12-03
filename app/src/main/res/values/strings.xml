@@ -1,0 +1,26 @@
+<resources>
+    <string name="app_name">DRMMusic</string>
+    <string name="title_nav_msg">我的消息</string>
+    <string name="title_nav_stop">定时停止播放</string>
+    <string name="title_nav_night">夜间模式</string>
+    <string name="title_nav_skin">主题换肤</string>
+    <string name="title_nav_tobeartist">成为歌手</string>
+    <string name="title_nav_upload">上传歌曲</string>
+    <string name="title_nav_about">关于</string>
+
+
+    <string name="cancel">取消</string>
+    <string name="confirm">确定</string>
+
+    <string name="tab_local_title_local">本地音乐</string>
+    <string name="tab_local_title_recent">最近播放</string>
+    <string name="tab_local_title_download">下载管理</string>
+    <string name="tab_local_title_myArtist">我的歌手</string>
+
+    <string name="song">单曲</string>
+    <string name="artist">歌手</string>
+    <string name="ablum">专辑</string>
+
+
+    <string name="playall">播放全部</string>
+</resources>
