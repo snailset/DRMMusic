@@ -7,15 +7,28 @@ import android.support.annotation.ColorRes;
 
 import com.bilibili.magicasakura.utils.ThemeUtils;
 import com.fade.drmmusic.utils.ThemeHelper;
+import com.google.gson.Gson;
 
 /**
  * Created by SnailSet on 2016/11/26.
  */
 
 public class App extends Application implements ThemeUtils.switchColor {
+
+    public static Context context;
+    private static Gson gson;
+
+    public static Gson gsonInstance() {
+        if (gson == null) {
+            gson = new Gson();
+        }
+        return gson;
+    }
+
     @Override
     public void onCreate() {
         super.onCreate();
+        context = this;
         ThemeUtils.setSwitchColor(this);
     }
 

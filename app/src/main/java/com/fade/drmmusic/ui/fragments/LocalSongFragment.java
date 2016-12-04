@@ -13,7 +13,9 @@ import android.view.ViewGroup;
 import com.fade.drmmusic.R;
 import com.fade.drmmusic.dataloaders.MusicInfoLoader;
 import com.fade.drmmusic.models.MusicInfo;
+import com.fade.drmmusic.ui.activitys.MusicActivity;
 import com.fade.drmmusic.ui.adapters.SongAdapter;
+import com.fade.drmmusic.ui.interfaces.MusicStateListener;
 import com.fade.drmmusic.widgets.DividerItemDecoration;
 import com.fade.drmmusic.widgets.SongItemDecoration;
 
@@ -26,7 +28,7 @@ import butterknife.ButterKnife;
  * Created by SnailSet on 2016/12/2.
  */
 
-public class LocalSongFragment extends Fragment {
+public class LocalSongFragment extends Fragment implements MusicStateListener {
 
     @BindView(R.id.recyclerview)
     RecyclerView mRecyclerView;
@@ -40,6 +42,7 @@ public class LocalSongFragment extends Fragment {
         ButterKnife.bind(this, view);
         setRecyclerView();
         reloadAdapter();
+        ((MusicActivity)getActivity()).addMusicStateListenerListener(this);
         return view;
     }
 
@@ -68,5 +71,10 @@ public class LocalSongFragment extends Fragment {
         mRecyclerView.setAdapter(mSongAdapter);
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.addItemDecoration(new SongItemDecoration(getActivity(), DividerItemDecoration.VERTICAL_LIST));
+    }
+
+    @Override
+    public void onMetaChanged() {
+        mSongAdapter.notifyDataSetChanged();
     }
 }

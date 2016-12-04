@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <string name="app_name">DRMMusic</string>
     <string name="title_nav_msg">我的消息</string>
     <string name="title_nav_stop">定时停止播放</string>
@@ -23,4 +23,12 @@
 
 
     <string name="playall">播放全部</string>
+
+
+    <string name="next_play">已加入下一首播放</string>
+    <string name="queue_is_empty">播放队列为空</string>
+
+    <string name="duration_format" translatable="false"><xliff:g id="hours">%1$s</xliff:g> <xliff:g id="minutes">%2$s</xliff:g></string>
+    <string name="durationformatshort" translatable="false"><xliff:g id="format">%2$d:%3$02d</xliff:g></string>
+    <string name="durationformatlong" translatable="false"><xliff:g id="format">%1$d:%2$02d:%3$02d</xliff:g></string>
 </resources>

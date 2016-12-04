@@ -17,6 +17,7 @@ package com.fade.drmmusic.utils;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
+import android.os.AsyncTask;
 import android.preference.PreferenceManager;
 
 public final class PreferencesUtility {
@@ -32,16 +33,13 @@ public final class PreferencesUtility {
     private static final String TOGGLE_SYSTEM_ANIMATIONS = "toggle_system_animations";
     private static final String TOGGLE_ARTIST_GRID = "toggle_artist_grid";
     private static final String TOGGLE_ALBUM_GRID = "toggle_album_grid";
-    private static final String TOGGLE_PLAYLIST_VIEW = "toggle_playlist_view";
-    private static final String TOGGLE_SHOW_AUTO_PLAYLIST = "toggle_show_auto_playlist";
-
     private static final String TOGGLE_HEADPHONE_PAUSE = "toggle_headphone_pause";
     private static final String THEME_PREFERNCE = "theme_preference";
     private static final String START_PAGE_INDEX = "start_page_index";
     private static final String START_PAGE_PREFERENCE_LASTOPENED = "start_page_preference_latopened";
     private static final String NOW_PLAYNG_THEME_VALUE = "now_playing_theme_value";
-    private static final String TOGGLE_XPOSED_TRACKSELECTOR = "toggle_xposed_trackselector";
-    public static final String LAST_ADDED_CUTOFF = "last_added_cutoff";
+    private static final String FAVRIATE_MUSIC_PLAYLIST = "favirate_music_playlist";
+    private static final String DOWNMUSIC_BIT = "down_music_bit";
 
     private static PreferencesUtility sInstance;
 
@@ -58,6 +56,46 @@ public final class PreferencesUtility {
         return sInstance;
     }
 
+    public void setPlayLink(long id, String link) {
+        final SharedPreferences.Editor editor = mPreferences.edit();
+        editor.putString(id + "", link);
+        editor.apply();
+    }
+
+    public String getPlayLink(long id) {
+        return mPreferences.getString(id + "", null);
+    }
+
+
+    public void setItemPostion(String str) {
+        final SharedPreferences.Editor editor = mPreferences.edit();
+        editor.putString("item_relative_position", str);
+        editor.apply();
+    }
+
+    public String getItemPosition() {
+        return mPreferences.getString("item_relative_position", "推荐歌单 最新专辑 主播电台");
+    }
+
+    public void setDownMusicBit(int bit) {
+        final SharedPreferences.Editor editor = mPreferences.edit();
+        editor.putInt(DOWNMUSIC_BIT, bit);
+        editor.apply();
+    }
+
+    public int getDownMusicBit() {
+        return mPreferences.getInt(DOWNMUSIC_BIT, 192);
+    }
+
+    public boolean getFavriateMusicPlaylist() {
+        return mPreferences.getBoolean(FAVRIATE_MUSIC_PLAYLIST, false);
+    }
+
+    public void setFavriateMusicPlaylist(boolean b) {
+        final SharedPreferences.Editor editor = mPreferences.edit();
+        editor.putBoolean(FAVRIATE_MUSIC_PLAYLIST, b);
+        editor.apply();
+    }
 
     public void setOnSharedPreferenceChangeListener(OnSharedPreferenceChangeListener listener) {
         mPreferences.registerOnSharedPreferenceChangeListener(listener);
@@ -76,9 +114,16 @@ public final class PreferencesUtility {
     }
 
     public void setArtistsInGrid(final boolean b) {
-        final SharedPreferences.Editor editor = mPreferences.edit();
-        editor.putBoolean(TOGGLE_ARTIST_GRID, b);
-        editor.apply();
+        new AsyncTask<Void, Void, Void>() {
+            @Override
+            protected Void doInBackground(final Void... unused) {
+                final SharedPreferences.Editor editor = mPreferences.edit();
+                editor.putBoolean(TOGGLE_ARTIST_GRID, b);
+                editor.apply();
+                return null;
+            }
+        }.execute();
+
     }
 
     public boolean isAlbumsInGrid() {
@@ -86,9 +131,16 @@ public final class PreferencesUtility {
     }
 
     public void setAlbumsInGrid(final boolean b) {
-        final SharedPreferences.Editor editor = mPreferences.edit();
-        editor.putBoolean(TOGGLE_ALBUM_GRID, b);
-        editor.apply();
+        new AsyncTask<Void, Void, Void>() {
+            @Override
+            protected Void doInBackground(final Void... unused) {
+                final SharedPreferences.Editor editor = mPreferences.edit();
+                editor.putBoolean(TOGGLE_ALBUM_GRID, b);
+                editor.apply();
+                return null;
+            }
+        }.execute();
+
     }
 
     public boolean pauseEnabledOnDetach() {
@@ -104,9 +156,15 @@ public final class PreferencesUtility {
     }
 
     public void setStartPageIndex(final int index) {
-        final SharedPreferences.Editor editor = mPreferences.edit();
-        editor.putInt(START_PAGE_INDEX, index);
-        editor.apply();
+        new AsyncTask<Void, Void, Void>() {
+            @Override
+            protected Void doInBackground(final Void... unused) {
+                final SharedPreferences.Editor editor = mPreferences.edit();
+                editor.putInt(START_PAGE_INDEX, index);
+                editor.apply();
+                return null;
+            }
+        }.execute();
     }
 
     public void setLastOpenedAsStartPagePreference(boolean preference) {
@@ -120,9 +178,16 @@ public final class PreferencesUtility {
     }
 
     private void setSortOrder(final String key, final String value) {
-        final SharedPreferences.Editor editor = mPreferences.edit();
-        editor.putString(key, value);
-        editor.apply();
+        new AsyncTask<Void, Void, Void>() {
+            @Override
+            protected Void doInBackground(final Void... unused) {
+                final SharedPreferences.Editor editor = mPreferences.edit();
+                editor.putString(key, value);
+                editor.apply();
+
+                return null;
+            }
+        }.execute();
     }
 
     public final String getArtistSortOrder() {
@@ -136,6 +201,16 @@ public final class PreferencesUtility {
     public final String getArtistSongSortOrder() {
         return mPreferences.getString(ARTIST_SONG_SORT_ORDER,
                 SortOrder.ArtistSongSortOrder.SONG_A_Z);
+    }
+
+    public static String FOLDER_SONG_SORT_ORDER = "folder_sort";
+
+    public void setFolerSortOrder(final String value) {
+        setSortOrder(FOLDER_SONG_SORT_ORDER, value);
+    }
+
+    public final String getFoloerSortOrder() {
+        return mPreferences.getString(FOLDER_SONG_SORT_ORDER, SortOrder.FolderSortOrder.FOLDER_A_Z);
     }
 
     public void setArtistSongSortOrder(final String value) {
@@ -185,38 +260,4 @@ public final class PreferencesUtility {
         editor.putBoolean(NOW_PLAYNG_THEME_VALUE, value);
         editor.apply();
     }
-
-    public boolean getXPosedTrackselectorEnabled() {
-        return mPreferences.getBoolean(TOGGLE_XPOSED_TRACKSELECTOR, false);
-    }
-
-    public int getPlaylistView() {
-        return mPreferences.getInt(TOGGLE_PLAYLIST_VIEW ,0);
-    }
-
-    public void setPlaylistView(final int i) {
-        final SharedPreferences.Editor editor = mPreferences.edit();
-        editor.putInt(TOGGLE_PLAYLIST_VIEW, i);
-        editor.apply();
-    }
-
-    public boolean showAutoPlaylist() {
-        return mPreferences.getBoolean(TOGGLE_SHOW_AUTO_PLAYLIST, true);
-    }
-
-    public void setToggleShowAutoPlaylist(final boolean b) {
-        final SharedPreferences.Editor editor = mPreferences.edit();
-        editor.putBoolean(TOGGLE_SHOW_AUTO_PLAYLIST, b);
-        editor.apply();
-    }
-
-    /** @parm lastAddedMillis timestamp in millis used as a cutoff for last added playlist */
-    public void setLastAddedCutoff(long lastAddedMillis) {
-        mPreferences.edit().putLong(LAST_ADDED_CUTOFF, lastAddedMillis).apply();
-    }
-
-    public long getLastAddedCutoff() {
-        return mPreferences.getLong(LAST_ADDED_CUTOFF, 0L);
-    }
 }
-
