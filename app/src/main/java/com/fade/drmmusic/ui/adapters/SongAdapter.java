@@ -1,5 +1,6 @@
 package com.fade.drmmusic.ui.adapters;
 
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -13,7 +14,6 @@ import com.fade.drmmusic.R;
 import com.fade.drmmusic.core.MusicPlayer;
 import com.fade.drmmusic.dataloaders.MusicInfoLoader;
 import com.fade.drmmusic.models.MusicInfo;
-import com.fade.drmmusic.utils.FLog;
 
 import java.util.HashMap;
 import java.util.List;
@@ -156,7 +156,22 @@ public class SongAdapter extends RecyclerView.Adapter<SongAdapter.ItemView> {
                 }
 
                 private void playAt(final int position) {
-                    new Thread(new Runnable() {
+//                    new Thread(new Runnable() {
+//                        @Override
+//                        public void run() {
+//                            long[] list = new long[mMusicInfos.size()];
+//                            HashMap<Long, MusicInfo> infos = new HashMap();
+//                            for (int i = 0; i < mMusicInfos.size(); i++) {
+//                                MusicInfo info = mMusicInfos.get(i);
+//                                list[i] = info.songId;
+//                                info.islocal = true;
+//                                info.albumData = MusicInfoLoader.getAlbumArtUri(info.albumId) + "";
+//                                infos.put(list[i], mMusicInfos.get(i));
+//                            }
+//                            MusicPlayer.playAll(infos, list, position, false);
+//                        }
+//                    }).start();
+                    new Handler().postDelayed(new Runnable() {
                         @Override
                         public void run() {
                             long[] list = new long[mMusicInfos.size()];
@@ -170,7 +185,7 @@ public class SongAdapter extends RecyclerView.Adapter<SongAdapter.ItemView> {
                             }
                             MusicPlayer.playAll(infos, list, position, false);
                         }
-                    }).start();
+                    }, 60); // TODO: 2016/12/5 要是不延迟60ms就会出现歌曲与歌曲信息不同步
                 }
             });
         }

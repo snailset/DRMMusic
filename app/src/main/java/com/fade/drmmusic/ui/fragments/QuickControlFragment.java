@@ -1,5 +1,6 @@
 package com.fade.drmmusic.ui.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
@@ -18,6 +19,8 @@ import com.fade.drmmusic.App;
 import com.fade.drmmusic.R;
 import com.fade.drmmusic.core.MusicPlayer;
 import com.fade.drmmusic.ui.activitys.MusicActivity;
+import com.fade.drmmusic.ui.activitys.PlayingActivity;
+import com.fade.drmmusic.ui.dialogs.PlayQueueFragment;
 import com.fade.drmmusic.ui.interfaces.MusicStateListener;
 import com.fade.drmmusic.utils.FLog;
 
@@ -77,7 +80,9 @@ public class QuickControlFragment extends Fragment implements MusicStateListener
         view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                FLog.i("点到了打开详细播放");
+                Intent intent = new Intent(App.context, PlayingActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                App.context.startActivity(intent);
             }
         });
         setOnClick();
@@ -124,7 +129,14 @@ public class QuickControlFragment extends Fragment implements MusicStateListener
             @Override
             public void onClick(View view) {
                 FLog.i("点到了播放列表");
-                // TODO: 2016/12/4 这里写打开播放列表
+                Handler handler = new Handler();
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        PlayQueueFragment playQueueFragment = new PlayQueueFragment();
+                        playQueueFragment.show(getFragmentManager(), "playqueueframent");
+                    }
+                }, 60);
             }
         });
 

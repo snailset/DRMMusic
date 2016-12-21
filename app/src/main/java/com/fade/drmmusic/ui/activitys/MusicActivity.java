@@ -55,6 +55,7 @@ public class MusicActivity extends AppCompatActivity implements ServiceConnectio
     }
 
     public void addMusicStateListenerListener(final MusicStateListener status) {
+        FLog.i("addMusicStateListenerListener");
         if (status == this) {
             throw new UnsupportedOperationException("Override the method, don't add a listener");
         }
@@ -103,7 +104,7 @@ public class MusicActivity extends AppCompatActivity implements ServiceConnectio
 
     @Override
     public void onMetaChanged() {
-        FLog.i("onMetaChanged");
+        FLog.i("onMetaChanged: change count: " + mMusicStateListener.size());
         for (final MusicStateListener listener : mMusicStateListener) {
             if (listener != null) {
                 listener.onMetaChanged();

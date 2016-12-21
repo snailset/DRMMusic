@@ -27,6 +27,15 @@
             </intent-filter>
         </activity>
 
+        <activity
+            android:name=".ui.activitys.PlayingActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="com.wm.remusic.LAUNCH_NOW_PLAYING_ACTION" />
+            </intent-filter>
+        </activity>
+
         <service android:name=".core.MediaService"
                  android:process=".main"/>
 
