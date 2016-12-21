@@ -14,12 +14,12 @@
         android:layout_height="match_parent"
         android:layout_gravity="center"
         android:src="@drawable/placeholder_disk_play_song"
-        app:layout_widthPercent="52%" />
+        app:layout_widthPercent="45%" />
 
     <ImageView
         android:layout_width="match_parent"
         android:layout_gravity="center"
-        app:layout_widthPercent="76%"
+        app:layout_widthPercent="67%"
         android:layout_height="match_parent"
         android:layout_margin="1dp"
         android:src="@drawable/play_disc" />
